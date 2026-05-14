@@ -4,7 +4,7 @@ Nom : Rayen Saidani
 
 Prénom : Rayen
 
-Groupe : GTIC
+Groupe : GTIC L2A
 
 ## Description
 
