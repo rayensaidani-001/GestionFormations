@@ -1,44 +1,40 @@
 <?php
 
+require "includes/fonctions.php";
+
+require "includes/validation.php";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $nom = trim($_POST["nom"]);
-    $prenom = trim($_POST["prenom"]);
-    $email = trim($_POST["email"]);
+    $nom = nettoyer($_POST["nom"]);
 
-    $erreur = "";
+    $prenom = nettoyer($_POST["prenom"]);
 
-    if (empty($nom)) {
-        $erreur .= "Le nom est obligatoire.<br>";
+    $email = nettoyer($_POST["email"]);
+
+    // Validation
+
+    $erreur = validerFormulaire(
+        $nom,
+        $prenom,
+        $email
+    );
+
+    // Affichage
+
+    if (!empty($erreur)) {
+
+        echo afficherErreur($erreur);
+
+    } else {
+
+        echo afficherSucces(
+            $nom,
+            $prenom,
+            $email
+        );
+
     }
-
-    if (empty($prenom)) {
-        $erreur .= "Le prénom est obligatoire.<br>";
-    }
-
-    if (empty($email)) {
-        $erreur .= "L'email est obligatoire.<br>";
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $erreur .= "Format email invalide.<br>";
-    }
-
-}
-
-if (!empty($erreur)) {
-
-    echo "<div style='color:red;'>$erreur</div>";
-
-} else {
-
-    echo "<div style='color:green;'>Formulaire valide ✔</div>";
-
-    echo "Nom : $nom <br>";
-
-    echo "Prénom : $prenom <br>";
-
-    echo "Email : $email";
 
 }
 
