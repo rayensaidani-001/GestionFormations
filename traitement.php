@@ -1,18 +1,21 @@
 <?php
 
-require "includes/fonctions.php";
+require 'includes/connexion.php';
 
-require "includes/validation.php";
+require 'includes/validation.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+require 'includes/fonctions.php';
 
-    $nom = nettoyer($_POST["nom"]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $prenom = nettoyer($_POST["prenom"]);
+    $nom = trim($_POST['nom'] ?? '');
 
-    $email = nettoyer($_POST["email"]);
+    $prenom = trim($_POST['prenom'] ?? '');
 
-    // Validation
+    $email = trim($_POST['email'] ?? '');
+
+    $formation_id =
+    (int)($_POST['formation_id'] ?? 0);
 
     $erreur = validerFormulaire(
         $nom,
@@ -20,7 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email
     );
 
-    // Affichage
+    if ($formation_id <= 0) {
+
+        $erreur .=
+        'Veuillez choisir une formation.<br>';
+
+    }
 
     if (!empty($erreur)) {
 
@@ -28,11 +36,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else {
 
-        echo afficherSucces(
+        $pdo = getConnexion();
+
+        $stmt = $pdo->prepare(
+
+            'INSERT INTO inscriptions
+            (
+            nom,
+            prenom,
+            email,
+            formation_id,
+            statut_paiement,
+            date_inscription
+            )
+
+            VALUES
+            (?, ?, ?, ?, "en_attente", NOW())'
+
+        );
+
+        $stmt->execute([
+
             $nom,
             $prenom,
-            $email
+            $email,
+            $formation_id
+
+        ]);
+
+        $id = $pdo->lastInsertId();
+
+        header(
+            'Location: paiement.php?id=' . $id
         );
+
+        exit();
 
     }
 
