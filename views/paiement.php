@@ -1,77 +1,40 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php require 'views/partials/header.php'; ?>
 
-<head>
+<h1>Paiement</h1>
 
-<meta charset="UTF-8">
+<h2>
+Formation :
+<?= htmlspecialchars($inscription['formation_titre']) ?>
+</h2>
 
-<title>Paiement</title>
+<h3>
+Montant :
+<?= $inscription['prix'] ?> DT
+</h3>
 
-<style>
-
-body{
-    font-family: Arial;
-    margin: 30px;
-    background:#f5f5f5;
-}
-
-.box{
-    background:white;
-    padding:30px;
-    border-radius:8px;
-    max-width:500px;
-}
-
-button{
-    background:green;
-    color:white;
-    border:none;
-    padding:12px;
-    width:100%;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="box">
-
-<h1>Paiement validé ✅</h1>
+<?php if ($erreur_paiement): ?>
 
 <p>
-
-Bienvenue
-
-<strong>
-
-<?= htmlspecialchars(
-$_SESSION['etudiant']['prenom']
-) ?>
-
-</strong>
-
+Paiement refusé
 </p>
 
-<p>
+<?php endif; ?>
 
-Votre accès aux cours est maintenant activé.
+<form method="POST"
+      action="index.php?page=paiement&id=<?= $id ?>">
 
-</p>
+<button type="submit" name="mode" value="ok">
 
-<a href="index.php?page=cours">
-
-<button>
-
-Accéder aux cours
+Paiement réussi
 
 </button>
 
-</a>
+<button type="submit" name="mode" value="fail">
 
-</div>
+Paiement refusé
 
-</body>
+</button>
 
-</html>
+</form>
+
+<?php require 'views/partials/footer.php'; ?>

@@ -1,84 +1,41 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-<meta charset="UTF-8">
-
-<title>Formations MVC</title>
-
-<style>
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 30px;
-    background-color: #f5f5f5;
-}
-
-h1 {
-    color: #1A3A5C;
-}
-
-.formation {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-}
-
-.prix {
-    color: orange;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-a {
-    text-decoration: none;
-    color: #0d6efd;
-}
-
-</style>
-
-</head>
-
-<body>
+<?php require 'views/partials/header.php'; ?>
 
 <h1>Liste des Formations</h1>
 
+<div class="formations-container">
+
 <?php foreach ($formations as $f): ?>
 
-<div class="formation">
+<div class="formation-card">
 
-<h2>
-<?= htmlspecialchars($f['titre']) ?>
-</h2>
+    <h2>
+        <?= htmlspecialchars($f['titre']) ?>
+    </h2>
 
-<p>
-<?= htmlspecialchars($f['description']) ?>
-</p>
+    <p>
+        <?= htmlspecialchars($f['description']) ?>
+    </p>
 
-<p>
-Durée :
-<?= htmlspecialchars($f['duree']) ?>
+    <p>
+        Durée : <?= $f['duree'] ?>
+        |
+        Niveau : <?= $f['niveau'] ?>
+    </p>
 
-|
+    <h3>
+        <?= $f['prix'] ?> DT
+    </h3>
 
-Niveau :
-<?= htmlspecialchars($f['niveau']) ?>
-</p>
+    <a href="index.php?page=inscription&formation_id=<?= $f['id'] ?>">
 
-<p class="prix">
-<?= htmlspecialchars($f['prix']) ?> DT
-</p>
+        S'inscrire
 
-<a href="index.php?page=inscription&formation_id=<?= $f['id'] ?>">
-S'inscrire
-</a>
+    </a>
 
 </div>
 
 <?php endforeach; ?>
 
-</body>
+</div>
 
-</html>
+<?php require 'views/partials/footer.php'; ?>

@@ -1,67 +1,76 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
 
-<head>
-<meta charset="UTF-8">
-<title>Inscription</title>
+require 'views/partials/header.php';
+?>
 
-<style>
+<section class="form-section">
 
-body{
-    font-family: Arial;
-    margin: 30px;
-    background:#f5f5f5;
-}
+<h1>Formulaire d'Inscription</h1>
 
-form{
-    background:white;
-    padding:30px;
-    border-radius:8px;
-    max-width:500px;
-}
+<?php if (!empty($erreurs)): ?>
 
-input{
-    width:100%;
-    padding:10px;
-    margin-bottom:15px;
-}
+<div class="alert-error">
 
-button{
-    background:#1A3A5C;
-    color:white;
-    border:none;
-    padding:12px;
-    width:100%;
-}
+<ul>
 
-</style>
+<?php foreach ($erreurs as $e): ?>
 
-</head>
+<li><?= htmlspecialchars($e) ?></li>
 
-<body>
+<?php endforeach; ?>
 
-<h1>Inscription</h1>
+</ul>
+
+</div>
+
+<?php endif; ?>
 
 <form method="POST"
-action="index.php?page=paiement">
+      action="index.php?page=inscription">
 
-<input
-type="text"
-name="nom"
-placeholder="Nom"
-required>
+<label>Nom</label>
 
-<input
-type="text"
-name="prenom"
-placeholder="Prénom"
-required>
+<input type="text"
+       name="nom"
+       value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>"
+       required>
 
-<input
-type="email"
-name="email"
-placeholder="Email"
-required>
+<label>Prénom</label>
+
+<input type="text"
+       name="prenom"
+       value="<?= htmlspecialchars($_POST['prenom'] ?? '') ?>"
+       required>
+
+<label>Email</label>
+
+<input type="email"
+       name="email"
+       value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+       required>
+
+<label>Formation</label>
+
+<select name="formation_id" required>
+
+<option value="">
+Choisir une formation
+</option>
+
+<?php foreach ($formations as $f): ?>
+
+<option value="<?= $f['id'] ?>"
+<?= ($formation_preselect == $f['id']) ? 'selected' : '' ?>>
+
+<?= htmlspecialchars($f['titre']) ?>
+-
+<?= $f['prix'] ?> DT
+
+</option>
+
+<?php endforeach; ?>
+
+</select>
 
 <button type="submit">
 
@@ -71,6 +80,6 @@ Continuer vers paiement
 
 </form>
 
-</body>
+</section>
 
-</html>
+<?php require 'views/partials/footer.php'; ?>

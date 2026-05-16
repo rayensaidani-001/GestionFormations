@@ -1,64 +1,18 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php require 'views/partials/header.php'; ?>
 
-<head>
-
-<meta charset="UTF-8">
-
-<title>Cours</title>
-
-<style>
-
-body{
-    font-family: Arial;
-    margin: 30px;
-    background:#f5f5f5;
-}
-
-.card{
-    background:white;
-    padding:30px;
-    border-radius:8px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="card">
-
-<h1>Espace Cours 🎓</h1>
-
-<p>
-
-Bienvenue
-
-<strong>
-
-<?= htmlspecialchars(
-$_SESSION['etudiant']['prenom']
-) ?>
-
-</strong>
-
-</p>
+<h1>
+Cours de :
+<?= htmlspecialchars($_SESSION['formation_titre']) ?>
+</h1>
 
 <ul>
 
-<li>Introduction PHP</li>
+<li>Chapitre 1</li>
 
-<li>Architecture MVC</li>
+<li>Chapitre 2</li>
 
-<li>MySQL & PDO</li>
-
-<li>Sécurité Web</li>
+<li>Chapitre 3</li>
 
 </ul>
 
-</div>
-
-</body>
-
-</html>
+<?php require 'views/partials/footer.php'; ?>
